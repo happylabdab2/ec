@@ -1,5 +1,5 @@
 # Production stage: Use OpenJDK and set up non-root user
-FROM openjdk11:jdk-11.0.8_10-ubuntu as production-stage
+FROM ubuntu as production-stage
 
 # Set up a non-root user
 RUN addgroup --gid 1001 nonrootgroup && \
