@@ -1,10 +1,6 @@
 # Production stage: Use OpenJDK and set up non-root user
 FROM ubuntu as production-stage
 
-# Set up a non-root user
-RUN addgroup --gid 1001 nonrootgroup && \
-    adduser --uid 1001 --ingroup nonrootgroup --shell /bin/bash --disabled-password nonroot
-
 # Update and install required packages
 RUN apt-get update && apt-get install -y \
     jq \
@@ -16,8 +12,13 @@ RUN apt-get update && apt-get install -y \
     wget \
     curl \
     dialog \
+    adduser \
     && rm -rf /var/lib/apt/lists/*
 
+# Set up a non-root user
+RUN addgroup --gid 1001 nonrootgroup && \
+    adduser --uid 1001 --ingroup nonrootgroup --shell /bin/bash --disabled-password nonroot
+    
 # Set environment variables
 ENV PORT 80
 EXPOSE 80
